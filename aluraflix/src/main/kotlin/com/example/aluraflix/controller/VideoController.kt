@@ -34,4 +34,17 @@ class VideoController @Autowired constructor(val serviceVideo: VideoService) {
         serviceVideo.remover(video)
     }
 
+    @PutMapping("videos/{idVideo}")
+    fun atualizarVideo(@PathVariable("idVideo") idVideo: Long, @RequestBody video: Video){
+        val videoAntigo = serviceVideo.buscar(idVideo) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND,"Video nao encontrado")
+        val videoAtualizado = Video(
+                videoAntigo.id,
+                video.titulo,
+                video.descricao,
+                video.url
+        )
+
+        serviceVideo.atualizar(videoAtualizado)
+    }
+
 }
