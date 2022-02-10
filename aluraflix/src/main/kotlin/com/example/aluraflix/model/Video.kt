@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank
 
 @Entity
 @Table(name="video")
-data class Video (
+class Video (
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
