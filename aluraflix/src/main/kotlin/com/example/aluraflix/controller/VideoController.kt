@@ -24,8 +24,14 @@ class VideoController @Autowired constructor(val serviceVideo: VideoService) {
     }
 
     @PostMapping("videos")
-    fun criarVideo(@RequestBody @Valid video: Video){
+    fun criarVideo(@Valid @RequestBody video: Video){
         serviceVideo.criar(video)
+    }
+
+    @DeleteMapping("videos/{idVideo}")
+    fun deletarVideo(@PathVariable("idVideo") idVideo: Long){
+        val video = serviceVideo.buscar(idVideo) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND,"Video nao encontrado")
+        serviceVideo.remover(video)
     }
 
 }

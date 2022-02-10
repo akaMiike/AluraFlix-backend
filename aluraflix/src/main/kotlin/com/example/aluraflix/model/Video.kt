@@ -6,22 +6,22 @@ import jakarta.validation.constraints.NotBlank
 
 @Entity
 @Table(name="video")
-open class Video (
+data class Video (
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     var id:Long? = null,
 
+    @field:NotBlank(message = "titulo é obrigatório")
     @Column(name="titulo")
-    @NotBlank
     var titulo: String = "",
 
+    @field:NotBlank(message = "descricao é obrigatório")
     @Column(name="descricao")
-    @NotBlank
     var descricao: String = "",
 
+    @field:NotBlank(message = "url é obrigatória")
     @Column(name="url")
-    @NotBlank
     var url: String = ""
 )
