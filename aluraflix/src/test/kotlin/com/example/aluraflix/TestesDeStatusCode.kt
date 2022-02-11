@@ -25,5 +25,19 @@ class TestesDeStatusCode @Autowired constructor(val mvc: MockMvc, val serviceVid
             .andExpect(MockMvcResultMatchers.status().isOk())
     }
 
+    @Test
+    fun testarStatusCodeRetornarVideoPorIdInexistente(){
+        mvc.perform(MockMvcRequestBuilders.get("/videos/" + nextInt(10,100)))
+            .andExpect(MockMvcResultMatchers.status().isNotFound())
+    }
+
+    @Test
+    fun testarStatusCodeRetornarVideoPorIdExistente(){
+        val video = Video(null,"titulo1","descricao1","www.video1.com")
+        serviceVideo.criar(video)
+
+        mvc.perform(MockMvcRequestBuilders.get("/videos/"+ video.id.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+    }
 
 }
