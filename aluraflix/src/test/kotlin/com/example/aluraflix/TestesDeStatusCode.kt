@@ -8,11 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
-import org.springframework.http.RequestEntity.post
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
-import java.util.*
 import kotlin.random.Random.Default.nextInt
 
 @SpringBootTest
@@ -55,5 +53,25 @@ class TestesDeStatusCode @Autowired constructor(val mvc: MockMvc, val serviceVid
             .andExpect(MockMvcResultMatchers.status().isOk())
     }
 
+    @Test
+    fun testarStatusCodeCriarVideo(){
+        mvc.perform(MockMvcRequestBuilders.post("/videos")
+            .content(objectMapper.writeValueAsString(Video(null,"titulo2","descricao2","www.video2.com")))
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+    }
+
+    @Test
+    fun testarStatusCodeAtualizarVideo(){
+        val videoAntigo = Video(null,"titulo1","descricao1","url1")
+        serviceVideo.criar(videoAntigo)
+
+        mvc.perform(MockMvcRequestBuilders.put("/videos/" + videoAntigo.id.toString())
+            .content(objectMapper.writeValueAsString(Video(null,"titulo2","descricao2","www.video2.com")))
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+
+        serviceVideo.remover(videoAntigo)
+    }
 
 }
