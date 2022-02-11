@@ -1,8 +1,6 @@
 package com.example.aluraflix.model
 
 import javax.persistence.*
-import javax.validation.constraints.NotBlank
-
 
 @Entity
 @Table(name="video")
@@ -13,15 +11,16 @@ class Video (
     @Column(name="id")
     var id:Long? = null,
 
-    @field:NotBlank(message = "titulo é obrigatório")
+    @ManyToOne
+    @JoinColumn(name="idCategoria")
+    var idCategoria: Categoria,
+
     @Column(name="titulo")
-    var titulo: String = "",
+    var titulo: String,
 
-    @field:NotBlank(message = "descricao é obrigatório")
     @Column(name="descricao")
-    var descricao: String = "",
+    var descricao: String,
 
-    @field:NotBlank(message = "url é obrigatória")
     @Column(name="url")
-    var url: String = ""
+    var url: String
 )
