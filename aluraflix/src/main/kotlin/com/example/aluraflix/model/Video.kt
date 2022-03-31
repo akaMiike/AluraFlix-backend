@@ -12,8 +12,8 @@ class Video (
     var id:Long? = null,
 
     @ManyToOne
-    @JoinColumn(name="idCategoria")
-    var idCategoria: Categoria,
+    @JoinColumn(name="categoria")
+    var categoria: Categoria,
 
     @Column(name="titulo")
     var titulo: String,
